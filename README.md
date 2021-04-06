@@ -1,6 +1,7 @@
 # Spline
 
-This repo is based on the code of Arkan. The `splines.hpp` allows to compute spline function.
+This repo is based on the code of Arkan (https://github.com/brainexcerpts/Spline). The `splines.hpp` allows to compute
+spline functions and the first derivate.
 
 ## How To
 
@@ -21,4 +22,4 @@ number of points like this,
 ./spline file.txt 100
 ```
 
-Data are stored in the `output.txt` file.
+The script will give (`a`, `x`, `y`, `dx`, `dy`) and store the data in the `output.txt` file.
