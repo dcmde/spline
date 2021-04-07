@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "splines.hpp"
+#include "BSplines.hpp"
 
 void split(const std::string &str, std::vector<double> &vec, char delim = ' ') {
     double val;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 //    std::cout << "Output" << std::endl;
     ofstream << "a x y dx dy" << std::endl;
 
-    Spline<Vec3, float> spline(cpt, eOPEN_UNIFORM);
+    BSpline<Vec3, float> spline(cpt, eOPEN_UNIFORM);
 
     spline.set_ctrl_points(ctrlPts);
 

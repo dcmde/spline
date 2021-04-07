@@ -1,6 +1,6 @@
-# Spline
+# BSpline
 
-This repo is based on the code of Arkan (https://github.com/brainexcerpts/Spline). The `splines.hpp` allows to compute
+This repo is based on the code of Arkan (https://github.com/brainexcerpts/BSpline). The `splines.hpp` allows to compute
 spline functions and the first derivate.
 
 ## How To
