@@ -46,15 +46,13 @@ public:
         a_0 = a0;
     }
 
+    double getTangent() const {
+        return t1;
+    }
+
+    // To do
     double arcLength() const {
         double temp1, temp2, temp3;
-        if (a2 != 0) {
-            temp2 = sqrt(pow((2 * a2 * x2 + a1 + 1), 3)) / (3 * a2);
-            temp1 = sqrt(pow((2 * a2 * x1 + a1 + 1), 3)) / (3 * a2);
-            temp3 = temp2 - temp1;
-        } else {
-            temp3 = sqrt(1 + pow(a1, 2)) * (x2 - x1);
-        }
         return temp3;
     }
 
@@ -71,12 +69,66 @@ protected:
     double a2, a1, a0;
 };
 
-class CubicSplineCurve {
+class QuadraticSplineCurve {
 public:
-    explicit CubicSplineCurve(std::vector<std::vector<double>> coordinates) : coord(std::move(coordinates)) {}
+
+    explicit QuadraticSplineCurve(std::vector<std::vector<double>> coordinates, double tangent) : coord(
+            std::move(coordinates)), t(tangent) {}
+
+    void compute() {
+        QuadraticSplineSegment segment{};
+        double x1, y1, x2, y2;
+
+        for (int i = 0; i < coord.size() - 1; ++i) {
+            auto pts1 = coord[i];
+            auto pts2 = coord[i + 1];
+            x1 = pts1[0];
+            y1 = pts1[1];
+            x2 = pts2[0];
+            y2 = pts2[1];
+
+            segment.setCtrlPointsAbscissa(x1, x2);
+            segment.setCtrlPointsOrdinate(y1, y2);
+
+            if (i == 0) {
+                segment.setTangent(t);
+            } else {
+                segment.setTangent(curve[curve.size() - 1].evalDerivative(x2));
+            }
+
+            segment.computeParams();
+
+            curve.push_back(segment);
+        }
+    }
+
+    double evalFunction(double x) {
+        double x1, x2;
+
+        for (int i = 0; i < coord.size() - 1; ++i) {
+
+            auto pts1 = coord[i];
+            auto pts2 = coord[i + 1];
+
+            x1 = pts1[0];
+            x2 = pts2[0];
+
+            if (x1 < x2) {
+                if ((x >= x1) and (x <= x2)) {
+                    return curve[i].evalFunction(x);
+                }
+            } else {
+                if ((x <= x1) and (x >= x2)) {
+                    return curve[i].evalFunction(x);
+                }
+            }
+        }
+    }
 
 protected:
     std::vector<std::vector<double>> coord;
+    std::vector<QuadraticSplineSegment> curve;
+    double t;
 };
 
 #endif //SPLINE_SPLINE_HPP
