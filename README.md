@@ -1,7 +1,7 @@
-# BSpline
+# BSpline and QuadraticSpline
 
-This repo is based on the code of Arkan (https://github.com/brainexcerpts/BSpline). The `splines.hpp` allows to compute
-spline functions and the first derivate.
+The BSpline is based on the code of Arkan (https://github.com/brainexcerpts/BSpline). The `bsplines.hpp` allows to compute
+bspline functions and the first derivative. The `spline.hpp` allows to compute a quadratic spline function.
 
 ## How To
 
@@ -20,6 +20,7 @@ number of points like this,
 
 ```
 ./spline file.txt 100
+./bspline file.txt 100
 ```
 
-The script will give (`a`, `x`, `y`, `dx`, `dy`) and store the data in the `output.txt` file.
+The script will give (`a`, `x`, `y`, `dx`, `dy`) and store the data in the `x_output.txt` file.
