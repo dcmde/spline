@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     numPts = std::stoi(argv[2]);
 
-    std::ofstream ofstream("output.txt");
+    std::ofstream ofstream("bspline_output.txt");
 
     if (!ofstream.is_open()) {
         std::cout << "Cannot open the output file." << std::endl;
