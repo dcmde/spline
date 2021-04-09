@@ -38,6 +38,7 @@ public:
         a2 = X[0];
         a1 = X[1];
         a0 = X[2];
+        std::cout << a2 << " " << a1 << " " << a0 << std::endl;
     }
 
     void getParams(double &a_2, double &a_1, double &a_0) const {
@@ -50,10 +51,19 @@ public:
         return t1;
     }
 
-    // To do
-    double arcLength() const {
-        double temp1, temp2, temp3;
-        return temp3;
+    double arcLength(double gamma) {
+        computeParams();
+        double yi = y1, yi1, xi = x1, xi1, len, ti;
+        while (norm(xi - x2, yi - y2) > gamma * 3) {
+            ti = evalDerivative(xi);
+            yi = evalFunction(xi);
+            xi1 = xi + gamma / norm(1, ti);
+            yi1 = evalFunction(xi1);
+            len += norm(xi1 - xi, yi1 - yi);
+            std::cout << ((norm(xi - x2, yi - y2) - gamma) / gamma - 1.0) * 100 << " " << xi << std::endl;
+            xi = xi1;
+        }
+        return len;
     }
 
     double evalFunction(double x) const {
@@ -65,6 +75,11 @@ public:
     }
 
 protected:
+
+    static inline double norm(double x, double y) {
+        return sqrt(pow(x, 2) + pow(y, 2));
+    }
+
     double t1, x1, x2, y1, y2;
     double a2, a1, a0;
 };
@@ -125,10 +140,17 @@ public:
         }
     }
 
+    double length(double gamma) {
+        cLength = 0;
+        for (auto segment : curve) {
+            cLength += segment.arcLength(gamma/1000.0);
+        }
+    }
+
 protected:
     std::vector<std::vector<double>> coord;
     std::vector<QuadraticSplineSegment> curve;
-    double t;
+    double t, cLength{};
 };
 
 #endif //SPLINE_SPLINE_HPP
